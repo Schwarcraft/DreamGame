@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+#TESTING
 var speed = 150
 var rotation_speed = 150
 var max_speed = 80
