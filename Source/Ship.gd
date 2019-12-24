@@ -48,8 +48,7 @@ func _process(delta):
 				unequip(current_equipID)
 			
 			
-		if Input.is_action_just_pressed("right_click"):
-			get_node("AnimationPlayer").play("Spear_Attack")
+
 		
 		
 		
@@ -65,7 +64,7 @@ func equip(id):
 	var equipped
 	match id:
 		1: #ID 1= Spear
-			$Spear_tex.show()
+			$Spear.show()
 			current_equipID=1
 	pass
 
@@ -73,7 +72,7 @@ func equip(id):
 func unequip(id):
 	match id:
 		1: #ID 1 = Spear
-			$Spear_tex.hide()
+			$Spear.hide()
 			current_equipID = 0
 	is_equipped = false
 	
