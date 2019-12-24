@@ -1,0 +1,163 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://GUI_STUFF/label_HP_bg.png" type="Texture" id=1]
+[ext_resource path="res://GUI_STUFF/label_HP.png" type="Texture" id=2]
+[ext_resource path="res://GUI_STUFF/Comfortaa-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://GUI_STUFF/lifebar_bg.png" type="Texture" id=4]
+[ext_resource path="res://GUI_STUFF/lifebar_fill.png" type="Texture" id=5]
+[ext_resource path="res://GUI_STUFF/bombs_icon.png" type="Texture" id=6]
+[ext_resource path="res://GUI_STUFF/emeralds_icon.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+extra_spacing_bottom = 4
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 3 )
+
+[node name="GUI_NODE" type="Node"]
+
+[node name="GUI" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_left = 1.16638
+margin_right = 1.16638
+margin_bottom = 93.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 73.0
+
+[node name="Bars" type="VBoxContainer" parent="GUI/HBoxContainer"]
+margin_right = 776.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+
+[node name="Bar" type="HBoxContainer" parent="GUI/HBoxContainer/Bars"]
+margin_right = 776.0
+margin_bottom = 53.0
+
+[node name="Count" type="MarginContainer" parent="GUI/HBoxContainer/Bars/Bar"]
+editor/display_folded = true
+margin_right = 100.0
+margin_bottom = 53.0
+
+[node name="Background" type="NinePatchRect" parent="GUI/HBoxContainer/Bars/Bar/Count"]
+margin_right = 100.0
+margin_bottom = 53.0
+rect_min_size = Vector2( 100, 40 )
+texture = ExtResource( 1 )
+
+[node name="Title" type="TextureRect" parent="GUI/HBoxContainer/Bars/Bar/Count/Background"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -20.0
+margin_right = 53.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+
+[node name="Number" type="Label" parent="GUI/HBoxContainer/Bars/Bar/Count/Background"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -41.0
+margin_top = -20.0
+margin_right = -5.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "10"
+align = 2
+valign = 2
+
+[node name="Gauge" type="TextureProgress" parent="GUI/HBoxContainer/Bars/Bar"]
+margin_left = 104.0
+margin_right = 500.0
+margin_bottom = 53.0
+value = 100.0
+texture_under = ExtResource( 4 )
+texture_progress = ExtResource( 5 )
+
+[node name="Counters" type="HBoxContainer" parent="GUI/HBoxContainer"]
+margin_left = 780.0
+margin_right = 880.0
+margin_bottom = 53.0
+
+[node name="Counter" type="MarginContainer" parent="GUI/HBoxContainer/Counters"]
+margin_right = 100.0
+margin_bottom = 53.0
+
+[node name="Background" type="NinePatchRect" parent="GUI/HBoxContainer/Counters/Counter"]
+margin_right = 100.0
+margin_bottom = 53.0
+rect_min_size = Vector2( 100, 40 )
+texture = ExtResource( 1 )
+
+[node name="Icon" type="TextureRect" parent="GUI/HBoxContainer/Counters/Counter/Background"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -42.3639
+margin_bottom = 37.6361
+texture = ExtResource( 6 )
+stretch_mode = 4
+
+[node name="Number" type="Label" parent="GUI/HBoxContainer/Counters/Counter/Background"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = -31.8937
+margin_bottom = 21.1063
+custom_fonts/font = SubResource( 2 )
+text = "10"
+valign = 1
+
+[node name="Counters2" type="HBoxContainer" parent="GUI/HBoxContainer"]
+editor/display_folded = true
+margin_left = 884.0
+margin_right = 984.0
+margin_bottom = 53.0
+
+[node name="Counter" type="MarginContainer" parent="GUI/HBoxContainer/Counters2"]
+margin_right = 100.0
+margin_bottom = 53.0
+
+[node name="Background" type="NinePatchRect" parent="GUI/HBoxContainer/Counters2/Counter"]
+margin_right = 100.0
+margin_bottom = 53.0
+rect_min_size = Vector2( 100, 40 )
+texture = ExtResource( 1 )
+
+[node name="Icon" type="TextureRect" parent="GUI/HBoxContainer/Counters2/Counter/Background"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -39.5
+margin_bottom = 40.5
+texture = ExtResource( 7 )
+stretch_mode = 4
+
+[node name="Number" type="Label" parent="GUI/HBoxContainer/Counters2/Counter/Background"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = -30.4617
+margin_bottom = 22.5383
+custom_fonts/font = SubResource( 2 )
+text = "10"
+valign = 1
