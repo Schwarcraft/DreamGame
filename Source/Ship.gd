@@ -1,14 +1,12 @@
 extends RigidBody2D
 
-
-
 var speed = 150
-
-
 var Mouse_position
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
+#-----Equipment vars-----
+var is_equipped = false
+var current_equipID = 0
+
 
 slave var slave_position = Vector2()
 slave var slave_rotation = 0
@@ -43,7 +41,12 @@ func _process(delta):
 		
 		#-----Equipment Block-----
 		if Input.is_action_just_pressed("equip"):
-			equip(1)
+			if is_equipped== false:
+				equip(1)
+				is_equipped = true 
+			else:
+				unequip(current_equipID)
+			
 			
 		if Input.is_action_just_pressed("right_click"):
 			get_node("AnimationPlayer").play("Spear_Attack")
@@ -58,12 +61,21 @@ func _process(delta):
 #This function will equip a set item:
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
-
 func equip(id):
 	var equipped
 	match id:
 		1: #ID 1= Spear
 			$Spear_tex.show()
+			current_equipID=1
 	pass
+
+
+func unequip(id):
+	match id:
+		1: #ID 1 = Spear
+			$Spear_tex.hide()
+			current_equipID = 0
+	is_equipped = false
+	
 
 
