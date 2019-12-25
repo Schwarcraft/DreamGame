@@ -49,8 +49,8 @@ func _process(delta):
 				rpc('_unequip',1)
 
 
-		if Input.is_action_just_pressed("left_click"):
-			get_node("AnimationPlayer").play("Pickaxe_tex")
+#		if Input.is_action_just_pressed("left_click"):
+#			get_node("AnimationPlayer").play("Pickaxe_tex")
 		
 		
 		
@@ -73,7 +73,7 @@ sync func _equip(id):
 
 			$Spear.set_process(true)
 
-			$Pickaxe_tex.show()
+#			$Pickaxe_tex.show()
 
 
 			current_equipID=1
@@ -90,7 +90,7 @@ sync func _unequip(id):
 
 			$Spear.set_process(false)
 
-			$Pickaxe_tex.hide()
+#			$Pickaxe_tex.hide()
 
 
 			current_equipID = 0
