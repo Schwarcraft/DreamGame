@@ -11,8 +11,8 @@ func _process(delta):
 	if is_network_master():
 		if Input.is_action_just_pressed("right_click"):
 			get_node("../SpearPlayer").play("Spear_Attack")
-		rset_unreliable("slave_position", position)
-		rset_unreliable("slave_rotation", rotation)
+			rset_unreliable("slave_position", position)
+			rset_unreliable("slave_rotation", rotation)
 	else:
 		position = slave_position
 		rotation = slave_rotation

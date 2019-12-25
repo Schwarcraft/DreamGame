@@ -42,10 +42,10 @@ func _process(delta):
 		#-----Equipment Block-----
 		if Input.is_action_just_pressed("equip"):
 			if is_equipped== false:
-				rpc('equip',1)
+				rpc('_equip',1)
 				is_equipped = true 
 			else:
-				rpc('unequip',1)
+				rpc('_unequip',1)
 			
 			
 
@@ -63,7 +63,7 @@ func _process(delta):
 #This function will equip a set item:
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
-sync func equip(id):
+sync func _equip(id):
 	var equipped
 	match id:
 		1: #ID 1= Spear
@@ -77,7 +77,7 @@ sync func equip(id):
 	pass
 
 
-sync func unequip(id):
+sync func _unequip(id):
 	match id:
 		1: #ID 1 = Spear
 
