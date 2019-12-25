@@ -55,8 +55,6 @@ tracks/1/keys = {
 collision_mask = 7
 gravity_scale = 0.0
 script = ExtResource( 1 )
-speed = null
-maxHealth = null
 
 [node name="player1" type="Sprite" parent="."]
 texture = ExtResource( 2 )
