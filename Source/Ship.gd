@@ -50,6 +50,9 @@ func _process(delta):
 			
 
 		
+		if Input.is_action_just_pressed("left_click"):
+			get_node("AnimationPlayer").play("Pickaxe_tex")
+		
 		
 		
 	else:
@@ -64,8 +67,12 @@ sync func equip(id):
 	var equipped
 	match id:
 		1: #ID 1= Spear
+
 			$Spear.show()
 			$Spear.set_process(true)
+
+			$Pickaxe_tex.show()
+
 			current_equipID=1
 	pass
 
@@ -73,8 +80,12 @@ sync func equip(id):
 sync func unequip(id):
 	match id:
 		1: #ID 1 = Spear
+
 			$Spear.hide()
 			$Spear.set_process(false)
+
+			$Pickaxe_tex.hide()
+
 			current_equipID = 0
 	is_equipped = false
 	
