@@ -19,6 +19,7 @@ font_data = ExtResource( 3 )
 [node name="GUI_NODE" type="Node"]
 
 [node name="GUI" type="MarginContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 margin_left = 1.16638
 margin_right = 1.16638
@@ -29,17 +30,20 @@ custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
+editor/display_folded = true
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 1004.0
 margin_bottom = 73.0
 
 [node name="Bars" type="VBoxContainer" parent="GUI/HBoxContainer"]
+editor/display_folded = true
 margin_right = 776.0
 margin_bottom = 53.0
 size_flags_horizontal = 3
 
 [node name="Bar" type="HBoxContainer" parent="GUI/HBoxContainer/Bars"]
+editor/display_folded = true
 margin_right = 776.0
 margin_bottom = 53.0
 
@@ -85,6 +89,7 @@ texture_under = ExtResource( 4 )
 texture_progress = ExtResource( 5 )
 
 [node name="Counters" type="HBoxContainer" parent="GUI/HBoxContainer"]
+editor/display_folded = true
 margin_left = 780.0
 margin_right = 880.0
 margin_bottom = 53.0
