@@ -80,9 +80,8 @@ sync func _unequip(id):
 		1: #ID 1 = Spear
 			$Spear.hide()
 			$Spear/Spear_Collider.disabled=true
-$Spear.set_process(false)
+			$Spear.set_process(false)
 
-#			$Pickaxe_tex.hide()
 
 
 			current_equipID = 0
