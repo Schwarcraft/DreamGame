@@ -51,9 +51,7 @@ func _process(delta):
 
 #		if Input.is_action_just_pressed("left_click"):
 #			get_node("AnimationPlayer").play("Pickaxe_tex")
-		
-		
-		
+
 	else:
 		position = slave_position
 		rotation = slave_rotation
@@ -66,15 +64,12 @@ sync func _equip(id):
 	var equipped
 	match id:
 		1: #ID 1= Spear
-
 			$Spear.show()
-
 			$Spear/Spear_Collider.disabled = false
 
 			$Spear.set_process(true)
 
 #			$Pickaxe_tex.show()
-
 
 			current_equipID=1
 	pass
@@ -83,12 +78,9 @@ sync func _equip(id):
 sync func _unequip(id):
 	match id:
 		1: #ID 1 = Spear
-
 			$Spear.hide()
-
 			$Spear/Spear_Collider.disabled=true
-
-			$Spear.set_process(false)
+$Spear.set_process(false)
 
 #			$Pickaxe_tex.hide()
 
