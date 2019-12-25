@@ -42,14 +42,13 @@ func _process(delta):
 		#-----Equipment Block-----
 		if Input.is_action_just_pressed("equip"):
 			if is_equipped== false:
-				equip(1)
+				rpc('equip',1)
 				is_equipped = true 
 			else:
-				unequip(current_equipID)
+				rpc('unequip',1)
 			
 			
-		if Input.is_action_just_pressed("right_click"):
-			get_node("AnimationPlayer").play("Spear_Attack")
+
 		
 		if Input.is_action_just_pressed("left_click"):
 			get_node("AnimationPlayer").play("Pickaxe_tex")
@@ -64,21 +63,32 @@ func _process(delta):
 #This function will equip a set item:
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
-func equip(id):
+sync func equip(id):
 	var equipped
 	match id:
 		1: #ID 1= Spear
+
+			$Spear.show()
+			$Spear.set_process(true)
+
 			$Pickaxe_tex.show()
+
 			current_equipID=1
 	pass
 
 
-func unequip(id):
+sync func unequip(id):
 	match id:
 		1: #ID 1 = Spear
+
+			$Spear.hide()
+			$Spear.set_process(false)
+
 			$Pickaxe_tex.hide()
+
 			current_equipID = 0
 	is_equipped = false
 	
+
 
 

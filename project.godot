@@ -65,6 +65,15 @@ left_click={
  ]
 }
 
+[layer_names]
+
+2d_render/layer_1="Player"
+2d_physics/layer_1="Player"
+2d_render/layer_2="Environment"
+2d_physics/layer_2="Environment"
+2d_render/layer_3="Weapons"
+2d_physics/layer_3="Weapons"
+
 [rendering]
 
 environment/default_environment="res://Source/default_env.tres"
