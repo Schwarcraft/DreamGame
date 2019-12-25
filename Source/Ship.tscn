@@ -9,7 +9,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 11.8153
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Pickaxe_tex"
 length = 0.5
 tracks/0/type = "value"
@@ -25,8 +25,7 @@ tracks/0/keys = {
 "values": [ 90.0, 170.0, 90.0 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Spear_Attack"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Spear_tex:position")
 tracks/0/interp = 2
@@ -52,8 +51,8 @@ position = Vector2( 0, -0.463287 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Pickaxe_tex = SubResource( 3 )
-anims/Spear_Attack = SubResource( 2 )
+anims/Pickaxe_tex = SubResource( 2 )
+anims/Spear_Attack = SubResource( 3 )
 
 [node name="Spear_tex" type="Sprite" parent="."]
 visible = false
