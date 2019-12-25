@@ -10,16 +10,13 @@ var slave_rotation = 0
 func _process(delta):
 	if is_network_master():
 		if Input.is_action_just_pressed("right_click"):
-			get_node("../SpearPlayer").play("Spear_Attack")
-			rset_unreliable("slave_position", position)
-			rset_unreliable("slave_rotation", rotation)
-	else:
-		position = slave_position
-		rotation = slave_rotation
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+			rpc('_Animate')
+
+sync func _Animate():
+	get_node("../AnimationPlayer").play("Spear_Attack")
 
 
-#func _on_Spear_body_entered(body):
-#	rset_unreliable(body.hide())
+func _on_Spear_body_entered(body):
+	if body.has_method("_hit"):
+		body.rpc('_hit',Damage)
+	

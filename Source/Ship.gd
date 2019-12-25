@@ -1,19 +1,20 @@
 extends RigidBody2D
 
-var speed = 150
+export var speed = 150
+export var maxHealth = 100
+
+var health = maxHealth
 var Mouse_position
 
 #-----Equipment vars-----
 var is_equipped = false
 var current_equipID = 0
 
-
 slave var slave_position = Vector2()
 slave var slave_rotation = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	pass
+	rpc('_unequip',1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,10 +47,8 @@ func _process(delta):
 				is_equipped = true 
 			else:
 				rpc('_unequip',1)
-			
-			
 
-		
+
 		if Input.is_action_just_pressed("left_click"):
 			get_node("AnimationPlayer").play("Pickaxe_tex")
 		
@@ -69,9 +68,13 @@ sync func _equip(id):
 		1: #ID 1= Spear
 
 			$Spear.show()
+
+			$Spear/Spear_Collider.disabled = false
+
 			$Spear.set_process(true)
 
 			$Pickaxe_tex.show()
+
 
 			current_equipID=1
 	pass
@@ -82,13 +85,28 @@ sync func _unequip(id):
 		1: #ID 1 = Spear
 
 			$Spear.hide()
+
+			$Spear/Spear_Collider.disabled=true
+
 			$Spear.set_process(false)
 
 			$Pickaxe_tex.hide()
 
+
 			current_equipID = 0
 	is_equipped = false
+
+
+sync func _hit(damage):
+	health-= damage 
+	if health <= 0:
+		health=0
+		rpc('_die')
+
+
+sync func _die():
+	set_process(false)
+	rpc('_unequip',current_equipID)
+	position=Vector2(1000,1000)
+#	hide()
 	
-
-
-
