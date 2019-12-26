@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Spear.png-589ca41f5da166b13e07bad33c8ea3aa.stex"
+path="res://.import/spritesheet_tiles.png-240fb5084814194e5b319fcd509d74fc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Spear.png"
-dest_files=[ "res://.import/Spear.png-589ca41f5da166b13e07bad33c8ea3aa.stex" ]
+source_file="res://Images/Tilemap/spritesheet_tiles.png"
+dest_files=[ "res://.import/spritesheet_tiles.png-240fb5084814194e5b319fcd509d74fc.stex" ]
 
 [params]
 

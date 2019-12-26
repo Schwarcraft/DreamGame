@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends KinematicBody2D
 
 export var speed = 150
 export var maxHealth = 100
@@ -80,17 +80,17 @@ sync func _unequip(id):
 		1: #ID 1 = Spear
 			$Spear.hide()
 			$Spear/Spear_Collider.disabled=true
-$Spear.set_process(false)
+			$Spear.set_process(false)
 
-#			$Pickaxe_tex.hide()
 
 
 			current_equipID = 0
 	is_equipped = false
 
 
-sync func _hit(damage):
-	health-= damage 
+remote func _hit(damage):
+	health-= damage
+	print("IM HIT!!!") 
 	if health <= 0:
 		health=0
 		rpc('_die')
