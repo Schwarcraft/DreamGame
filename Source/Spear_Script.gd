@@ -20,6 +20,7 @@ sync func _Animate():
 	get_node("../AnimationPlayer").play("Spear_Attack")
 
 
+#-----Throws the a spear by creating a new projectile node in the current scene
 sync func _throwSpear():
 	var ship_node = get_parent()
 	ship_node._unequip(1)

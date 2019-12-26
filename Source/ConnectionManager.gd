@@ -2,10 +2,12 @@ extends Node
 
 const PORT = 1234
 var ship = null
+var main = null
 var players = []
 
 func _ready():
 	ship = preload("res://Source/Ship.tscn")
+	main = preload("res://Source/Main.tscn")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 
 func on_host_game():
@@ -13,16 +15,20 @@ func on_host_game():
  # 4 is the number of maximum clients
 	host.create_server(PORT, 4)
 	get_tree().set_network_peer(host)
- 
+	var m = main.instance()
+	get_tree().get_root().add_child(m)
 	_connected_ok()
  
 func on_join_game(ip):
 	var host = NetworkedMultiplayerENet.new()
 	host.create_client(ip, PORT)
+	var m = main.instance()
+	get_tree().get_root().add_child(m)
 	get_tree().set_network_peer(host)
 
 
 func _connected_ok():
+ 
  rpc("register_player", get_tree().get_network_unique_id())
  register_player(get_tree().get_network_unique_id())
  get_tree().get_root().get_node("Lobby").queue_free()
