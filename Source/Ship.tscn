@@ -68,12 +68,13 @@ shape = SubResource( 1 )
 anims/Spear_Attack = SubResource( 3 )
 
 [node name="Spear" type="Area2D" parent="."]
+collision_layer = 4
 script = ExtResource( 3 )
 
 [node name="Spear_tex" type="Sprite" parent="Spear"]
-position = Vector2( 5, 19.458 )
+position = Vector2( 5, 20 )
 rotation = 1.5708
-scale = Vector2( 0.638633, 0.638633 )
+scale = Vector2( 0.64, 0.64 )
 texture = ExtResource( 4 )
 
 [node name="Spear_Collider" type="CollisionShape2D" parent="Spear"]
