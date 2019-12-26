@@ -1,25 +1,25 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://GUI_STUFF/label_HP_bg.png" type="Texture" id=1]
-[ext_resource path="res://GUI_STUFF/label_HP.png" type="Texture" id=2]
-[ext_resource path="res://GUI_STUFF/Comfortaa-Bold.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://GUI_STUFF/lifebar_bg.png" type="Texture" id=4]
-[ext_resource path="res://GUI_STUFF/lifebar_fill.png" type="Texture" id=5]
-[ext_resource path="res://GUI_STUFF/bombs_icon.png" type="Texture" id=6]
-[ext_resource path="res://GUI_STUFF/emeralds_icon.png" type="Texture" id=7]
+[ext_resource path="res://Source/GUI.gd" type="Script" id=1]
+[ext_resource path="res://GUI_STUFF/label_HP_bg.png" type="Texture" id=2]
+[ext_resource path="res://GUI_STUFF/label_HP.png" type="Texture" id=3]
+[ext_resource path="res://GUI_STUFF/Comfortaa-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://GUI_STUFF/lifebar_bg.png" type="Texture" id=5]
+[ext_resource path="res://GUI_STUFF/lifebar_fill.png" type="Texture" id=6]
+[ext_resource path="res://GUI_STUFF/bombs_icon.png" type="Texture" id=7]
+[ext_resource path="res://GUI_STUFF/emeralds_icon.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
 extra_spacing_bottom = 4
-font_data = ExtResource( 3 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 3 )
+font_data = ExtResource( 4 )
 
 [node name="GUI_NODE" type="Node"]
 
 [node name="GUI" type="MarginContainer" parent="."]
-editor/display_folded = true
 anchor_right = 1.0
 margin_left = 1.16638
 margin_right = 1.16638
@@ -28,9 +28,9 @@ custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
+script = ExtResource( 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
-editor/display_folded = true
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 1004.0
@@ -55,7 +55,7 @@ margin_bottom = 53.0
 margin_right = 100.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 100, 40 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Title" type="TextureRect" parent="GUI/HBoxContainer/Bars/Bar/Count/Background"]
 anchor_top = 0.5
@@ -63,7 +63,7 @@ anchor_bottom = 0.5
 margin_top = -20.0
 margin_right = 53.0
 margin_bottom = 20.0
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="Number" type="Label" parent="GUI/HBoxContainer/Bars/Bar/Count/Background"]
@@ -85,11 +85,10 @@ margin_left = 104.0
 margin_right = 500.0
 margin_bottom = 53.0
 value = 100.0
-texture_under = ExtResource( 4 )
-texture_progress = ExtResource( 5 )
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 6 )
 
 [node name="Counters" type="HBoxContainer" parent="GUI/HBoxContainer"]
-editor/display_folded = true
 margin_left = 780.0
 margin_right = 880.0
 margin_bottom = 53.0
@@ -102,7 +101,7 @@ margin_bottom = 53.0
 margin_right = 100.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 100, 40 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Icon" type="TextureRect" parent="GUI/HBoxContainer/Counters/Counter/Background"]
 anchor_left = 1.0
@@ -112,7 +111,7 @@ anchor_bottom = 0.5
 margin_left = -80.0
 margin_top = -39.5
 margin_bottom = 40.5
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 stretch_mode = 4
 
 [node name="Number" type="Label" parent="GUI/HBoxContainer/Counters/Counter/Background"]
@@ -140,7 +139,7 @@ margin_bottom = 53.0
 margin_right = 100.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 100, 40 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Icon" type="TextureRect" parent="GUI/HBoxContainer/Counters2/Counter/Background"]
 anchor_left = 1.0
@@ -150,7 +149,7 @@ anchor_bottom = 0.5
 margin_left = -80.0
 margin_top = -39.5
 margin_bottom = 40.5
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 stretch_mode = 4
 
 [node name="Number" type="Label" parent="GUI/HBoxContainer/Counters2/Counter/Background"]

@@ -70,6 +70,7 @@ margin_left = 276.0
 margin_top = 26.0
 margin_right = 439.0
 margin_bottom = 50.0
+rect_scale = Vector2( 1.24133, 1.27947 )
 text = "Enter a IP address"
 [connection signal="pressed" from="Panel/HostArea/Button" to="." method="_on_HostButton_pressed"]
 [connection signal="pressed" from="Panel/ColorRect/Button" to="." method="_on_JoinButton_pressed"]
