@@ -13,16 +13,22 @@ func _process(delta):
 		
 		#-----Thrown Attack-----
 		if Input.is_action_just_pressed("right_click"):
-			var ship_node = get_parent()
-			ship_node._unequip(1)
-			var projectile = spear_projectile_scene.instance()
-			projectile.position=ship_node.position
-			projectile.rotation=ship_node.rotation
-			get_tree().get_root().add_child(projectile)
+			rpc('_throwSpear')
+
 
 sync func _Animate():
 	get_node("../AnimationPlayer").play("Spear_Attack")
+
+
+sync func _throwSpear():
+	var ship_node = get_parent()
+	ship_node._unequip(1)
+	var projectile = spear_projectile_scene.instance()
+	projectile.position=ship_node.position
+	projectile.rotation=ship_node.rotation
+	get_tree().get_root().add_child(projectile)
 	
+
 
 func _on_Spear_body_entered(body):
 	if body.has_method("_hit"):

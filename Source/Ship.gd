@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends KinematicBody2D
 
 export var speed = 150
 export var maxHealth = 100
@@ -88,8 +88,9 @@ sync func _unequip(id):
 	is_equipped = false
 
 
-sync func _hit(damage):
-	health-= damage 
+remote func _hit(damage):
+	health-= damage
+	print("IM HIT!!!") 
 	if health <= 0:
 		health=0
 		rpc('_die')
