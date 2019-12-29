@@ -49,7 +49,7 @@ margin_left = 17.0
 margin_top = 188.0
 margin_right = 1004.0
 margin_bottom = 341.0
-color = Color( 0.462745, 0.462745, 0.462745, 1 )
+olor = Color( 0.462745, 0.462745, 0.462745, 1 )
 
 [node name="TextEdit" type="TextEdit" parent="Panel/ColorRect"]
 margin_left = 403.0
