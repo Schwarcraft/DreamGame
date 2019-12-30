@@ -40,6 +40,7 @@ remote func register_player(player_id):
  p.set_network_master(player_id)
  p.name = str(player_id)
  get_tree().get_root().add_child(p)
+ p.networkID=player_id
  # if I'm the server I inform the new connected player about the others
  if get_tree().get_network_unique_id() == 1:
   if player_id != 1:

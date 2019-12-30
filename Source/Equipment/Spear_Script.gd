@@ -1,7 +1,7 @@
 extends Area2D
 export var Damage = 25
 
-onready var spear_projectile_scene = preload("res://Source/Spear_Projectile.tscn")
+onready var spear_projectile_scene = preload("res://Source/Equipment/Spear_Projectile.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _process(delta):
@@ -17,18 +17,17 @@ func _process(delta):
 
 
 sync func _Animate():
-	get_node("../AnimationPlayer").play("Spear_Attack")
+	get_node("AnimationPlayer").play("Attack")
 
 
 #-----Throws the a spear by creating a new projectile node in the current scene
 sync func _throwSpear():
 	var ship_node = get_parent()
-	ship_node._unequip(1)
 	var projectile = spear_projectile_scene.instance()
 	projectile.position=ship_node.position
 	projectile.rotation=ship_node.rotation
 	get_tree().get_root().add_child(projectile)
-	
+	ship_node._unequip(1)
 
 
 func _on_Spear_body_entered(body):
