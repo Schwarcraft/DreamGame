@@ -5,13 +5,23 @@ export var maxHealth = 100
 
 var health = maxHealth
 var Mouse_position
+var networkID
 #------Harvesting vars--------
 var harvesting  = false
 
 #-----Equipment vars-----
-var is_equipped = false
 var current_equipID = 0
 
+#------------------------
+#---  Equipment List  ---
+#------------------------
+var spearHeldScene = preload("res://Source/Equipment/Spear_Held.tscn")
+var spearHeld = null #1
+
+onready var pickaxeScene = preload("res://Source/Equipment/Pickaxe.tscn")
+var pickaxe = null #2
+
+#Network Stuff
 slave var slave_position = Vector2()
 slave var slave_rotation = 0
 var velocity = Vector2()
@@ -20,7 +30,6 @@ func _ready():
 	var GUI=preload("res://Source/GUI.tscn")
 	var localGUI= GUI.instance()
 	get_tree().get_root().add_child(localGUI)
-	rpc('_unequip',1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_input():
@@ -47,23 +56,17 @@ func _get_input():
 		rset_unreliable("slave_rotation", rotation)
 		
 		#-----Equipment Block-----
-		if Input.is_action_just_pressed("equip"):
-			if is_equipped== false:
+		if Input.is_action_just_pressed("equip1"):
+			if current_equipID != 1:
+				rpc('_unequip', current_equipID)
 				rpc('_equip',1)
-				is_equipped = true 
-			else:
-				rpc('_unequip',1)
-			
-			
-		if Input.is_action_just_pressed("right_click"):
-			get_node("AnimationPlayer").play("Spear_Attack")
-		
-		if Input.is_action_just_pressed("left_click"):
-			harvesting = true;
-			get_node("AnimationPlayer").play("Pickaxe_tex")
-			harvesting = false;
-		
-		
+				current_equipID=1
+
+		if Input.is_action_just_pressed("equip2"):
+			if current_equipID != 2:
+				rpc('_unequip', current_equipID)
+				rpc('_equip',2)
+				current_equipID=2
 
 	else:
 		position = slave_position
@@ -77,32 +80,27 @@ func _physics_process(delta):
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
 sync func _equip(id):
-	var equipped
 	match id:
 		1: #ID 1= Spear
-			$Spear.show()
-			$Spear/Spear_Collider.disabled = false
-
-			$Spear.set_process(true)
-
-#			$Pickaxe_tex.show()
-
-			current_equipID=1
+			spearHeld=spearHeldScene.instance()
+			spearHeld.set_network_master(networkID)
+			add_child(spearHeld)
+		2: #ID 2= Pickaxe
+			pickaxe=pickaxeScene.instance()
+			pickaxe.set_network_master(networkID)
+			add_child(pickaxe)
+			
 	pass
 
 
 sync func _unequip(id):
 	match id:
 		1: #ID 1 = Spear
-			$Spear.hide()
-			$Spear/Spear_Collider.disabled=true
-			$Spear.set_process(false)
-
-
-
-			current_equipID = 0
-	is_equipped = false
-
+			remove_child(spearHeld)
+			
+		2: #ID 2 = Pickaxe
+			remove_child(pickaxe)
+	current_equipID=0
 	
 
 remote func _hit(damage):
