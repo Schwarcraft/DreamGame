@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 var speed = 150
 var Mouse_position
-
 #------Harvesting vars--------
 var harvesting  = false
 
@@ -10,14 +9,14 @@ var harvesting  = false
 var is_equipped = false
 var current_equipID = 0
 
-
 slave var slave_position = Vector2()
 slave var slave_rotation = 0
 var velocity = Vector2()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	pass
+	var GUI=preload("res://Source/GUI.tscn")
+	var localGUI= GUI.instance()
+	get_tree().get_root().add_child(localGUI)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_input():
@@ -73,7 +72,6 @@ func _physics_process(delta):
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
 func equip(id):
-	var equipped
 	match id:
 		1: #ID 1= Spear
 			$Pickaxe_tex.show()

@@ -1,5 +1,4 @@
 extends Node
-#RESOURCE_MANAGER
 var stone_count = 0
 onready var stone_label = $HBoxContainer/Counters/Counter/Background/Number
 
