@@ -4,7 +4,7 @@ var velocity = Vector2()
 #has_hit Defines if this object has hit something hit. This is used to prevent damaging multiple times
 var has_hit = false
 export var speed = 5
-export var damage= 1
+export var damage=25
 
 
 func _physics_process(delta):
@@ -15,6 +15,6 @@ func _physics_process(delta):
 			has_hit=true
 			if collision.collider.has_method("_hit") and has_hit==false:
 				collision.collider.rpc("_hit",damage)
-				free()
+			free()
 #	else:
 #		velocity=Vector2(0,0)
