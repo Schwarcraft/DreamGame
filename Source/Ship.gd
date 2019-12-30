@@ -52,7 +52,7 @@ func _get_input():
 				rpc('_equip',1)
 				is_equipped = true 
 			else:
-				unequip(current_equipID)
+				rpc('_unequip',1)
 			
 			
 		if Input.is_action_just_pressed("right_click"):
@@ -64,7 +64,7 @@ func _get_input():
 			harvesting = false;
 		
 		
-				rpc('_unequip',1)
+
 	else:
 		position = slave_position
 		rotation = slave_rotation
