@@ -1,30 +1,31 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Source/Ship.gd" type="Script" id=1]
-[ext_resource path="res://Images/player1.png" type="Texture" id=2]
-[ext_resource path="res://Images/Spear.png" type="Texture" id=3]
-[ext_resource path="res://Source/Area2D.gd" type="Script" id=4]
-[ext_resource path="res://Images/Pickaxe.png" type="Texture" id=5]
+ext_resource path="res://Images/Sprites/player1.png" type="Texture" id=2]
+[ext_resource path="res://Source/Spear_Script.gd" type="Script" id=3]
+[ext_resource path="res://Images/Sprites/Spear.png" type="Texture" id=4]
 
-[sub_resource type="Animation" id=1]
-resource_name = "Pickaxe_tex"
-length = 0.5
+[sub_resource type="CircleShape2D" id=1]
+radius = 14.9845
+
+[sub_resource type="Animation" id=2]
+resource_name = "New Anim"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Pickaxe/Pickaxe_tex:rotation_degrees")
+tracks/0/path = NodePath("Spear/Spear_tex:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.5 ),
+"times": PoolRealArray( 0, 0.5, 0.999212 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 90.0, 170.0, 90.0 ]
+"values": [ 90.0, 180.0, 90.0 ]
 }
 
-[sub_resource type="Animation" id=2]
+sub_resource type="Animation" id=3]
 tracks/0/type = "value"
-tracks/0/path = NodePath("Spear_tex:position")
+tracks/0/path = NodePath("Spear/Spear_tex:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -35,6 +36,20 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 5, 19.458 ), Vector2( 35, 19.458 ), Vector2( 5, 19.458 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Spear/Spear_Collider:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.997382 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 27.4832, 13.6182 ), Vector2( 57.483, 13.618 ), Vector2( 27.4832, 13.6182 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=4]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 11.8153

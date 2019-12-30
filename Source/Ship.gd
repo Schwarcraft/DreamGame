@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
-var speed = 150
+export var speed = 150
+export var maxHealth = 100
+
+var health = maxHealth
 var Mouse_position
 #------Harvesting vars--------
 var harvesting  = false
@@ -17,6 +20,7 @@ func _ready():
 	var GUI=preload("res://Source/GUI.tscn")
 	var localGUI= GUI.instance()
 	get_tree().get_root().add_child(localGUI)
+	rpc('_unequip',1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_input():
@@ -45,7 +49,7 @@ func _get_input():
 		#-----Equipment Block-----
 		if Input.is_action_just_pressed("equip"):
 			if is_equipped== false:
-				equip(1)
+				rpc('_equip',1)
 				is_equipped = true 
 			else:
 				unequip(current_equipID)
@@ -60,6 +64,7 @@ func _get_input():
 			harvesting = false;
 		
 		
+				rpc('_unequip',1)
 	else:
 		position = slave_position
 		rotation = slave_rotation
@@ -71,19 +76,46 @@ func _physics_process(delta):
 #This function will equip a set item:
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
-func equip(id):
+sync func _equip(id):
+	var equipped
 	match id:
 		1: #ID 1= Spear
-			$Pickaxe_tex.show()
+			$Spear.show()
+			$Spear/Spear_Collider.disabled = false
+
+			$Spear.set_process(true)
+
+#			$Pickaxe_tex.show()
+
 			current_equipID=1
 	pass
-	
-func unequip(id):
+
+
+sync func _unequip(id):
 	match id:
 		1: #ID 1 = Spear
-			$Pickaxe_tex.hide()
+			$Spear.hide()
+			$Spear/Spear_Collider.disabled=true
+			$Spear.set_process(false)
+
+
+
 			current_equipID = 0
 	is_equipped = false
 
 	
 
+remote func _hit(damage):
+	health-= damage
+	print("IM HIT!!!") 
+	if health <= 0:
+		health=0
+		rpc('_die')
+
+
+sync func _die():
+	set_process(false)
+	rpc('_unequip',current_equipID)
+	position=Vector2(1000,1000)
+#	hide()
+	
