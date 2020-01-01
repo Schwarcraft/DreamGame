@@ -21,15 +21,21 @@ var spearHeld = null #1
 onready var pickaxeScene = preload("res://Source/Equipment/Pickaxe.tscn")
 var pickaxe = null #2
 
+onready var hatchetScene = preload("res://Source/Equipment/Hatchet.tscn")
+var hatchet = null #3
+
+
+
 #Network Stuff
 slave var slave_position = Vector2()
 slave var slave_rotation = 0
 var velocity = Vector2()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var GUI=preload("res://Source/GUI.tscn")
-	var localGUI= GUI.instance()
-	get_tree().get_root().add_child(localGUI)
+	if is_network_master():
+		var GUI=preload("res://Source/GUI.tscn")
+		var localGUI= GUI.instance()
+		get_tree().get_root().add_child(localGUI)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_input():
@@ -67,6 +73,12 @@ func _get_input():
 				rpc('_unequip', current_equipID)
 				rpc('_equip',2)
 				current_equipID=2
+		
+		if Input.is_action_just_pressed("equip3"):
+			if current_equipID != 3:
+				rpc('_unequip', current_equipID)
+				rpc('_equip',3)
+				current_equipID=3
 
 	else:
 		position = slave_position
@@ -89,6 +101,10 @@ sync func _equip(id):
 			pickaxe=pickaxeScene.instance()
 			pickaxe.set_network_master(networkID)
 			add_child(pickaxe)
+		3: #ID 3 = hatchet
+			hatchet = hatchetScene.instance()
+			hatchet.set_network_master(networkID)
+			add_child(hatchet)
 			
 	pass
 
@@ -100,6 +116,8 @@ sync func _unequip(id):
 			
 		2: #ID 2 = Pickaxe
 			remove_child(pickaxe)
+		3: #ID 3 = Hatchet
+			remove_child(hatchet)
 	current_equipID=0
 	
 

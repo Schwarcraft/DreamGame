@@ -94,10 +94,12 @@ margin_right = 880.0
 margin_bottom = 53.0
 
 [node name="Counter" type="MarginContainer" parent="GUI/HBoxContainer/Counters"]
+editor/display_folded = true
 margin_right = 100.0
 margin_bottom = 53.0
 
 [node name="Background" type="NinePatchRect" parent="GUI/HBoxContainer/Counters/Counter"]
+editor/display_folded = true
 margin_right = 100.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 100, 40 )

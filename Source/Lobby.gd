@@ -7,7 +7,6 @@ func _ready():
 func _on_HostButton_pressed():
 	ConnectionManager.on_host_game()
 
-
 func _on_JoinButton_pressed():
 	var ip = $Panel/ColorRect/TextEdit.text	
 	ConnectionManager.on_join_game(ip)
