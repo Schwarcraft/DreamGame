@@ -32,6 +32,9 @@ var spearHeld = null #1
 onready var pickaxeScene = preload("res://Source/Equipment/Pickaxe.tscn")
 var pickaxe = null #2
 
+onready var hatchetScene = preload("res://Source/Equipment/Hatchet.tscn")
+var hatchet = null #4
+
 onready var grenadeScene = preload("res://Source/Equipment/Grenade.tscn")
 var grenade=null #3
 
@@ -42,6 +45,7 @@ var velocity = Vector2()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if is_network_master():
+		var GUI=preload("res://Source/GUI.tscn")
 		var localGUI= GUI.instance()
 		get_tree().get_root().add_child(localGUI)
 		
@@ -54,7 +58,6 @@ func _ready():
 		
 		add_child(cameraScene.instance())
 	
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_input():
 	Mouse_position=get_local_mouse_position()
@@ -93,7 +96,14 @@ func _get_input():
 			if current_equipID != 2:
 				rpc('_equip',2)
 				current_equipID=2
-		#----- Grenade Block -----
+		
+		if Input.is_action_just_pressed("equip4"):
+			if current_equipID != 4:
+				rpc('_unequip', current_equipID)
+				rpc('_equip',4)
+				current_equipID=4
+		
+			#----- Grenade Block -----
 		if Input.is_action_just_pressed("throw"):
 			if !is_throwing:
 				rpc('_equip',3)
@@ -137,6 +147,10 @@ sync func _equip(id):
 			pickaxe=pickaxeScene.instance()
 			pickaxe.set_network_master(networkID)
 			add_child(pickaxe)
+		4: #ID 4 = hatchet
+			hatchet = hatchetScene.instance()
+			hatchet.set_network_master(networkID)
+			add_child(hatchet)
 		3: #ID 3= Grenade
 			grenade=grenadeScene.instance()
 #			grenade.set_network_master(networkID)
@@ -153,6 +167,8 @@ sync func _unequip(id):
 			remove_child(spearHeld)
 		2: #ID 2 = Pickaxe
 			remove_child(pickaxe)
+		4: #ID 3 = Hatchet
+			remove_child(hatchet)
 		3: #ID 3 = Grenade
 			remove_child(grenade)
 	current_equipID=0

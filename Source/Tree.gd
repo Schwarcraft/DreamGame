@@ -14,20 +14,14 @@ func get_harvested():
 
 
 func _yield_resource():
-
 	var gui = get_node("/root/GUI_NODE/GUI")
-	#var gui = preload("res://Source/GUI.tscn")
-	gui._add_stone()
-	print("Called gui")
+	gui._add_tree()
 	get_parent().remove_child(self)
 
 
 	#GIVE STONE TO RESOURCE MANAGER
 	
-func _process(_delta):
-	if HP <= 0:
-		#emit_signal("yield_resource")
-		_yield_resource()
+
 
 #SPAWNING
 

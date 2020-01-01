@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Source/Area2D.gd" type="Script" id=1]
+[ext_resource path="res://Source/Pickaxe.gd" type="Script" id=1]
 [ext_resource path="res://Images/Sprites/Pickaxe.png" type="Texture" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
@@ -21,6 +21,22 @@ func _ready():
 #	pass
 "
 
+[sub_resource type="Animation" id=3]
+resource_name = "pickaxe_anim"
+length = 0.65
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pickaxe_tex:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 90.0, 130.0, 170.0, 90.0 ]
+}
+
 [node name="Pickaxe" type="Area2D"]
 scale = Vector2( 0.946829, 1.00973 )
 script = ExtResource( 1 )
@@ -37,3 +53,6 @@ rotation = -1.5708
 scale = Vector2( 0.988228, 2.73861 )
 shape = SubResource( 1 )
 script = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/pickaxe_anim = SubResource( 3 )

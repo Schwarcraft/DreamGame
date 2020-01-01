@@ -45,9 +45,9 @@ margin_bottom = -52.0
 text = "Host"
 
 [node name="ColorRect" type="ColorRect" parent="Panel"]
-margin_left = 17.0
+margin_left = 17.9025
 margin_top = 188.0
-margin_right = 1004.0
+margin_right = 1004.9
 margin_bottom = 341.0
 color = Color( 0.462745, 0.462745, 0.462745, 1 )
 
@@ -66,10 +66,10 @@ margin_bottom = 45.6808
 text = "Join!"
 
 [node name="Label" type="Label" parent="Panel/ColorRect"]
-margin_left = 276.0
-margin_top = 26.0
-margin_right = 439.0
-margin_bottom = 50.0
+margin_left = 250.73
+margin_top = 19.6825
+margin_right = 413.73
+margin_bottom = 43.6825
 rect_scale = Vector2( 1.24133, 1.27947 )
 text = "Enter a IP address"
 [connection signal="pressed" from="Panel/HostArea/Button" to="." method="_on_HostButton_pressed"]
