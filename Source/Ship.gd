@@ -88,12 +88,15 @@ func _get_input():
 		#----- Spear Block -----
 		if Input.is_action_just_pressed("equip1"):
 			if current_equipID != 1:
+				rpc('_unequip',current_equipID)
 				rpc('_equip',1)
+				
 				current_equipID=1
 
 		#----- Pickaxe Block -----
 		if Input.is_action_just_pressed("equip2"):
 			if current_equipID != 2:
+				rpc('_unequip',current_equipID)
 				rpc('_equip',2)
 				current_equipID=2
 		
@@ -106,6 +109,7 @@ func _get_input():
 			#----- Grenade Block -----
 		if Input.is_action_just_pressed("throw"):
 			if !is_throwing:
+				rpc('_unequip',current_equipID)
 				rpc('_equip',3)
 				current_equipID=3
 				is_throwing=true
@@ -137,24 +141,27 @@ func _physics_process(delta):
 #---Purpose---
 #Will take an item ID (int) input and change the sprite of the equipment on the player
 sync func _equip(id):
-	_unequip(current_equipID)
 	match id:
 		1: #ID 1= Spear
 			spearHeld=spearHeldScene.instance()
 			spearHeld.set_network_master(networkID)
 			add_child(spearHeld)
+			current_equipID=1
 		2: #ID 2= Pickaxe
 			pickaxe=pickaxeScene.instance()
 			pickaxe.set_network_master(networkID)
 			add_child(pickaxe)
+			current_equipID=2
 		4: #ID 4 = hatchet
 			hatchet = hatchetScene.instance()
 			hatchet.set_network_master(networkID)
 			add_child(hatchet)
+			current_equipID=4
 		3: #ID 3= Grenade
 			grenade=grenadeScene.instance()
 #			grenade.set_network_master(networkID)
 			add_child(grenade)
+			current_equipID=3
 			
 	pass
 
