@@ -14,13 +14,17 @@ var harvesting  = false
 #-----Equipment vars-----
 var current_equipID = 0
 
+onready var GUI=preload("res://Source/GUI.tscn")
+var healthText
+var healthSlider
+onready var cameraScene=preload("res://Source/Camera2D.tscn")
 #------------------------
 #---  Equipment List  ---
 #------------------------
 onready var crosshairScene=preload("res://Source/Equipment/Crosshair.tscn")
 var crosshair_instance = null
 
-onready var arrowScene=preload("res://Source/Arrow.tscn")
+#onready var arrowScene=preload("res://Source/Arrow.tscn")
 
 var spearHeldScene = preload("res://Source/Equipment/Spear_Held.tscn")
 var spearHeld = null #1
@@ -37,11 +41,18 @@ puppet var slave_rotation = 0
 var velocity = Vector2()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var GUI=preload("res://Source/GUI.tscn")
-	var localGUI= GUI.instance()
-	get_tree().get_root().add_child(localGUI)
-	
-	crosshair_instance = crosshairScene.instance()
+	if is_network_master():
+		var localGUI= GUI.instance()
+		get_tree().get_root().add_child(localGUI)
+		
+		healthText= get_node("/root/GUI_NODE/GUI/HBoxContainer/Bars/Bar/Count/Background/Number")
+		healthSlider=get_node("/root/GUI_NODE/GUI/HBoxContainer/Bars/Bar/Gauge")
+
+		for children in get_tree().get_root().get_children():
+			print(children.name)
+		crosshair_instance = crosshairScene.instance()
+		
+		add_child(cameraScene.instance())
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -149,18 +160,25 @@ sync func _unequip(id):
 
 remote func _hit(damage):
 	health-= damage
+#	GUI/HBoxContainer/Bars/Bar/Gauge.text
 	print("IM HIT!!!") 
 	if health <= 0:
 		health=0
 		rpc('_die')
+	if is_network_master():
+		healthSlider.value=health
+		healthText.text=str(health)
 
 
 func _localHit(damage):
 	health-= damage
+
 	print("IM HIT LOCALLY!!!") 
 	if health <= 0:
 		health=0
 		rpc('_die')
+	healthSlider.value=health
+	healthText.text=str(health)
 
 
 sync func _die():

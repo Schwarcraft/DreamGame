@@ -11,5 +11,7 @@ func _ready():
 func _add_stone():
 	stone_count +=1
 	stone_label.text = str(stone_count)
+	
+
 #func _process(delta):
 #	pass
