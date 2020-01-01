@@ -7,7 +7,7 @@ onready var spear_projectile_scene = preload("res://Source/Equipment/Spear_Proje
 func _process(_delta):
 	if is_network_master():
 		#-----Standard Attack-----
-		if Input.is_action_just_pressed("left_click"):
+		if Input.is_action_just_pressed("left_click")  or Input.is_action_pressed("left_click"):
 			rpc('_Animate')
 		
 		#-----Thrown Attack-----
