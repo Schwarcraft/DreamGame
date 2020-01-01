@@ -7,8 +7,8 @@ onready var tree_label = $HBoxContainer/Counters2/Counter/Background/Number
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	stone_label.text = str(stone_count)
-	tree_label.text = str(tree_count)
+#	stone_label.text = str(stone_count)
+#	tree_label.text = str(tree_count)
 	pass # Replace with function body.
 
 func _add_stone():
