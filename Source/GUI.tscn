@@ -17,7 +17,7 @@ font_data = ExtResource( 4 )
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 4 )
 
-[node name="GUI_NODE" type="Node"]
+[node name="GUI_NODE" type="CanvasLayer"]
 
 [node name="GUI" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -37,13 +37,11 @@ margin_right = 1004.0
 margin_bottom = 73.0
 
 [node name="Bars" type="VBoxContainer" parent="GUI/HBoxContainer"]
-editor/display_folded = true
 margin_right = 776.0
 margin_bottom = 53.0
 size_flags_horizontal = 3
 
 [node name="Bar" type="HBoxContainer" parent="GUI/HBoxContainer/Bars"]
-editor/display_folded = true
 margin_right = 776.0
 margin_bottom = 53.0
 
@@ -71,12 +69,12 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -41.0
-margin_top = -20.0
-margin_right = -5.0
-margin_bottom = 20.0
+margin_left = -46.3241
+margin_top = -18.9322
+margin_right = -9.3241
+margin_bottom = 19.0678
 custom_fonts/font = SubResource( 1 )
-text = "10"
+text = "100"
 align = 2
 valign = 2
 

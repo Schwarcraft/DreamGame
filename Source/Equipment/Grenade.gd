@@ -1,17 +1,16 @@
 extends KinematicBody2D
 
 export var throw_speed= 5
-export var maxDamage=150 #If near center
-export var minDamage=20 #If near edge of explosion
+export var maxDamage=50 #If near center
+#export var minDamage=20 #If near edge of explosion
 
-puppet var slave_position = Vector2()
 var target =Vector2(0,0)
 var is_thrown= false
 var timerStarted = false
 var bodiesInExplosion= null
 onready var velocity = Vector2(throw_speed, 0).rotated(rotation)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 #	if is_network_master():
 	if is_thrown && position.distance_to(target)>=10:
 		var collision = move_and_collide(velocity)
@@ -36,9 +35,11 @@ func _on_ExplosionTimer_timeout():
 	for body in bodiesInExplosion:
 		print(body.name)
 		if body.has_method("_hit"):
-			print("HIT")
+#			var distance = position.direction_to(body.position)
+#			print(distance)
+#			var damage= maxDamage*(1-distance)/100
 			body.rpc("_hit",maxDamage)
-			body._localHit(maxDamage)
+#			body._localHit(maxDamage)
 	queue_free()
 
 #remote func _setTarget(inputTarget):
