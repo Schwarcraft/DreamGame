@@ -17,6 +17,3 @@ func _add_stone():
 func _add_tree():
 	tree_count +=1
 	tree_label.text = str(tree_count)
-	
-	
-

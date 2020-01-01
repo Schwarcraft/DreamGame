@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Source/Equipment/Grenade.gd" type="Script" id=1]
+[ext_resource path="res://Images/Sprites/Grenade.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Throw"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Grenade_tex:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Grenade_tex:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.997441 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 18.0, 0.0 ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.3466
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 6.76605
+
+[node name="Grenade" type="KinematicBody2D"]
+position = Vector2( 0, 10 )
+script = ExtResource( 1 )
+
+[node name="Grenade_tex" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Throw = SubResource( 1 )
+
+[node name="ExplosionTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 2.0
+one_shot = true
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+
+[node name="ExplosionShape" type="CollisionShape2D" parent="ExplosionArea"]
+scale = Vector2( 5, 5 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="GrenadeCollider" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+disabled = true
+[connection signal="timeout" from="ExplosionTimer" to="." method="_on_ExplosionTimer_timeout"]

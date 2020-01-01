@@ -24,7 +24,10 @@ func _yield_resource():
 
 	#GIVE STONE TO RESOURCE MANAGER
 	
-
+func _process(_delta):
+	if HP <= 0:
+		#emit_signal("yield_resource")
+		_yield_resource()
 
 #SPAWNING
 

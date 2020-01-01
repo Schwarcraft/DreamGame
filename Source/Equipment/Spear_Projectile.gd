@@ -7,14 +7,17 @@ export var speed = 5
 export var damage=25
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 #	if has_hit !=false:
 		velocity = Vector2(speed, 0).rotated(rotation)
 		var collision = move_and_collide(velocity)
 		if collision:
+			print(collision.collider.name)
 			has_hit=true
-			if collision.collider.has_method("_hit") and has_hit==false:
+			if collision.collider.has_method("_hit"):
 				collision.collider.rpc("_hit",damage)
-			free()
+				free()
+			else:
+				free()
 #	else:
 #		velocity=Vector2(0,0)

@@ -4,9 +4,8 @@ export var Damage = 25
 onready var spear_projectile_scene = preload("res://Source/Equipment/Spear_Projectile.tscn")
 
 # Called when the node enters the scene tree for the first time.
-func _process(delta):
+func _process(_delta):
 	if is_network_master():
-		
 		#-----Standard Attack-----
 		if Input.is_action_just_pressed("left_click"):
 			rpc('_Animate')
