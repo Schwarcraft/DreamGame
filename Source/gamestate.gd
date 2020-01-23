@@ -8,22 +8,20 @@ const MAX_PEERS = 12
 
 # Name for my player
 var player_name = "The Warrior"
-var team_number= 1
+var player_team = 1
 # Names for remote players in id:name format
 var players = {}
-var players2 = {}
+var players_teams= {}
 # Signals to let lobby GUI know what's going on
 signal player_list_changed()
 signal connection_failed()
 signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
-
 # Callback from SceneTree
 func _player_connected(id):
 	# Registration of a client beings here, tell the connected player that we are here
-	rpc_id(id, "register_player", player_name)
-
+	rpc_id(id, "register_player", player_name, player_team)
 # Callback from SceneTree
 func _player_disconnected(id):
 	if has_node("/root/world"): # Game is in progress
@@ -51,18 +49,37 @@ func _connected_fail():
 
 # Lobby management functions
 
-sync func register_player(new_player_name):
+sync func register_player(new_player_name, playerTeam):
 	var id = get_tree().get_rpc_sender_id()
-	print(id)
-	players[id] = new_player_name
+#	print(id)
+	players[id] =new_player_name
+	players_teams[id] = playerTeam
+	
 	emit_signal("player_list_changed")
 
-func unregister_player(id):
-	if players.has(id):
-		players.erase(id)
-	if players2.has(id):
-		players2.erase(id)
+sync func unregister_player(id):
+	players.erase(id)
 	emit_signal("player_list_changed")
+
+func join_team1():
+	player_team=1
+	rpc("register_player", player_name, 1)
+
+	
+	
+func join_team2():
+	player_team=2
+	rpc("register_player", player_name, 2)
+
+
+#remote func set_teamLists(id, team):
+##	playerTeams[id]=team
+#	if get_tree().is_network_server():
+#		for p in playerTeams:
+#			rpc("set_teamLists", p, playerTeams[p])
+#		rpc("player_list_changed_func")
+#sync func player_list_changed_func():
+#	emit_signal("player_list_changed")
 
 remote func pre_start_game(spawn_points):
 	# Change scene
@@ -84,7 +101,7 @@ remote func pre_start_game(spawn_points):
 		if p_id == get_tree().get_network_unique_id():
 			# If node for this peer id, set name
 			player.set_player_name(player_name)
-		else:
+#		else:
 			# Otherwise set name from peer
 			player.set_player_name(players[p_id])
 
@@ -129,14 +146,14 @@ func join_game(ip, new_player_name):
 	host.create_client(ip, DEFAULT_PORT)
 	get_tree().set_network_peer(host)
 
-func get_player_list1():
-	return players.values()
-	
-func get_player_list2():
-	return players2.values()
+func get_player_list():
+	return players
 
 func get_player_name():
 	return player_name
+	
+func get_players_team():
+	return players_teams
 
 func begin_game():
 	assert(get_tree().is_network_server())
@@ -162,9 +179,6 @@ func end_game():
 	emit_signal("game_ended")
 	players.clear()
 	get_tree().set_network_peer(null) # End networking
-
-func set_team(_teamNumber):
-	team_number=_teamNumber
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
