@@ -3,11 +3,16 @@ extends KinematicBody2D
 export var speed = 150
 export var maxHealth = 100
 
+
+#---Player Info
+var team=1
 var health = maxHealth
 var Mouse_position
 var globalMousePosition = Vector2()
 var networkID
 var is_throwing=false
+var is_dead=false
+var spawn=Vector2()
 #------Harvesting vars--------
 var harvesting  = false
 
@@ -18,6 +23,7 @@ onready var GUI=preload("res://Source/GUI.tscn")
 var healthText
 var healthSlider
 onready var cameraScene=preload("res://Source/Camera2D.tscn")
+
 #------------------------
 #---  Equipment List  ---
 #------------------------
@@ -38,6 +44,7 @@ var hatchet = null #4
 onready var grenadeScene = preload("res://Source/Equipment/Grenade.tscn")
 var grenade=null #3
 
+
 #Network Stuff
 puppet var slave_position = Vector2()
 puppet var slave_rotation = 0
@@ -48,12 +55,12 @@ func _ready():
 		var GUI=preload("res://Source/GUI.tscn")
 		var localGUI= GUI.instance()
 		get_tree().get_root().add_child(localGUI)
-		
 		healthText= get_node("/root/GUI_NODE/GUI/HBoxContainer/Bars/Bar/Count/Background/Number")
 		healthSlider=get_node("/root/GUI_NODE/GUI/HBoxContainer/Bars/Bar/Gauge")
-
-		for children in get_tree().get_root().get_children():
-			print(children.name)
+		
+	
+#		for children in get_tree().get_root().get_children():
+#			print(children.name)
 		crosshair_instance = crosshairScene.instance()
 		
 		add_child(cameraScene.instance())
@@ -61,77 +68,77 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _get_input():
 	Mouse_position=get_local_mouse_position()
-		
-	if is_network_master():
-		globalMousePosition=get_global_mouse_position()
-		velocity = Vector2()
-		#-----Movement Block-----
-		if Input.is_action_pressed("move_right"):
-			velocity.x += 1
-		if Input.is_action_pressed("move_left"):
-			velocity.x -= 1
-		if Input.is_action_pressed("move_down"):
-			velocity.y += 1
-		if Input.is_action_pressed("move_up"):
-			velocity.y -= 1
-		if velocity.length() > 0:
-			velocity = velocity.normalized() * speed
-		#position += velocity * delta
-		rotation += Mouse_position.angle()
-#		position.x = clamp(position.x, 0, screen_size.x)
-#		position.y = clamp(position.y, 0, screen_size.y)
-		rset_unreliable("slave_position", position)
-		rset_unreliable("slave_rotation", rotation)
-		
-		#-----Equipment Block-----
-		
-		#----- Spear Block -----
-		if Input.is_action_just_pressed("equip1"):
-			if current_equipID != 1:
-				rpc('_unequip',current_equipID)
-				rpc('_equip',1)
-				
-				current_equipID=1
-
-		#----- Pickaxe Block -----
-		if Input.is_action_just_pressed("equip2"):
-			if current_equipID != 2:
-				rpc('_unequip',current_equipID)
-				rpc('_equip',2)
-				current_equipID=2
-		
-		if Input.is_action_just_pressed("equip4"):
-			if current_equipID != 4:
-				rpc('_unequip', current_equipID)
-				rpc('_equip',4)
-				current_equipID=4
-		
-			#----- Grenade Block -----
-		if Input.is_action_just_pressed("throw"):
-			if !is_throwing:
-				rpc('_unequip',current_equipID)
-				rpc('_equip',3)
-				current_equipID=3
-				is_throwing=true
-				get_tree().get_root().add_child(crosshair_instance)
-			else:
-				get_tree().get_root().remove_child(crosshair_instance)
-				is_throwing=false
-		if Input.is_action_just_pressed("left_click"):
-			if is_throwing==true && crosshair_instance.in_Range==true:
-				rpc('_throwGrenade',position,rotation,globalMousePosition)
-				rpc('_unequip',3)
-				get_tree().get_root().remove_child(crosshair_instance) #Removes the crosshair when grenade is thrown
-
-#				_localThrowGrenade()
-				is_throwing=false
-
-		if is_throwing==true:
-			crosshair_instance.playerPosition = position
+	if !is_dead:
+		if is_network_master():
+			globalMousePosition=get_global_mouse_position()
+			velocity = Vector2()
+			#-----Movement Block-----
+			if Input.is_action_pressed("move_right"):
+				velocity.x += 1
+			if Input.is_action_pressed("move_left"):
+				velocity.x -= 1
+			if Input.is_action_pressed("move_down"):
+				velocity.y += 1
+			if Input.is_action_pressed("move_up"):
+				velocity.y -= 1
+			if velocity.length() > 0:
+				velocity = velocity.normalized() * speed
+			#position += velocity * delta
+			rotation += Mouse_position.angle()
+		#		position.x = clamp(position.x, 0, screen_size.x)
+		#		position.y = clamp(position.y, 0, screen_size.y)
+			rset_unreliable("slave_position", position)
+			rset_unreliable("slave_rotation", rotation)
 			
-	else:
-		position = slave_position
-		rotation = slave_rotation
+			#-----Equipment Block-----
+			
+			#----- Spear Block -----
+			if Input.is_action_just_pressed("equip1"):
+				if current_equipID != 1:
+					rpc('_unequip',current_equipID)
+					rpc('_equip',1)
+					
+					current_equipID=1
+		
+			#----- Pickaxe Block -----
+			if Input.is_action_just_pressed("equip2"):
+				if current_equipID != 2:
+					rpc('_unequip',current_equipID)
+					rpc('_equip',2)
+					current_equipID=2
+			
+			if Input.is_action_just_pressed("equip4"):
+				if current_equipID != 4:
+					rpc('_unequip', current_equipID)
+					rpc('_equip',4)
+					current_equipID=4
+			
+				#----- Grenade Block -----
+			if Input.is_action_just_pressed("throw"):
+				if !is_throwing:
+					rpc('_unequip',current_equipID)
+					rpc('_equip',3)
+					current_equipID=3
+					is_throwing=true
+					get_tree().get_root().add_child(crosshair_instance)
+				else:
+					get_tree().get_root().remove_child(crosshair_instance)
+					is_throwing=false
+			if Input.is_action_just_pressed("left_click"):
+				if is_throwing==true && crosshair_instance.in_Range==true:
+					rpc('_throwGrenade',position,rotation,globalMousePosition)
+					rpc('_unequip',3)
+					get_tree().get_root().remove_child(crosshair_instance) #Removes the crosshair when grenade is thrown
+		
+		#				_localThrowGrenade()
+					is_throwing=false
+		
+			if is_throwing==true:
+				crosshair_instance.playerPosition = position
+				
+		else:
+			position = slave_position
+			rotation = slave_rotation
 #Benjamins ADDED CODE to try and make collisions work
 func _physics_process(delta):
 	_get_input()
@@ -202,13 +209,24 @@ func _localHit(damage):
 		rpc('_die')
 	healthSlider.value=health
 	healthText.text=str(health)
+	
 
 
 sync func _die():
 	set_process(false)
 	rpc('_unequip',current_equipID)
-	queue_free()
-	
+	hide()
+	is_dead=true
+	$rstime.start()
+
+sync func respawn_N():
+	print("respawning Network")
+	self.show()
+	set_process(true)
+	position=spawn
+	health=maxHealth
+	is_dead=false
+
 
 sync func _throwGrenade(inPosition,inRotation,inTarget):
 	var projectile=grenadeScene.instance()
@@ -218,3 +236,11 @@ sync func _throwGrenade(inPosition,inRotation,inTarget):
 	projectile.target=inTarget
 	get_tree().get_root().add_child(projectile)
 	
+func set_player_name(player_name):
+	name=player_name
+
+func _on_rstime_timeout():
+	rpc('respawn_N')
+	if is_network_master():
+		healthSlider.value=health
+		healthText.text=str(health)
