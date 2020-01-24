@@ -9,12 +9,19 @@ radius = 11.8153
 
 [node name="Ship" type="KinematicBody2D"]
 script = ExtResource( 1 )
+speed = 500
 
 [node name="player1" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
 [node name="player_collider" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -0.463287 )
 shape = SubResource( 1 )
 
 [node name="resource_spawner" parent="." instance=ExtResource( 3 )]
+
+[node name="rstime" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+[connection signal="timeout" from="rstime" to="." method="_on_rstime_timeout"]

@@ -83,34 +83,40 @@ func join_team2():
 
 remote func pre_start_game(spawn_points):
 	# Change scene
-	var world = load("res://world.tscn").instance()
+	var world = load("res://Source/Main.tscn").instance()
 	get_tree().get_root().add_child(world)
 
-	get_tree().get_root().get_node("lobby").hide()
+	get_tree().get_root().get_node("Lobby").hide()
 
-	var player_scene = load("res://player.tscn")
-
+	var player_scene = load("res://Source/Ship.tscn")
+	var spawn_pos 
+	
 	for p_id in spawn_points:
-		var spawn_pos = world.get_node("spawn_points/" + str(spawn_points[p_id])).position
+		if spawn_points[p_id]==1:
+			 spawn_pos = world.get_node("Spawn1").position
+		if spawn_points[p_id]==2:
+			 spawn_pos = world.get_node("Spawn2").position
 		var player = player_scene.instance()
-
+		player.networkID=int(p_id)
+		player.spawn=spawn_pos
+		player.team=int(spawn_points[p_id])
 		player.set_name(str(p_id)) # Use unique ID as node name
 		player.position=spawn_pos
-		player.set_network_master(p_id) #set unique id as master
+		player.set_network_master(int(p_id)) #set unique id as master
 
-		if p_id == get_tree().get_network_unique_id():
+		if int(p_id) == get_tree().get_network_unique_id():
 			# If node for this peer id, set name
 			player.set_player_name(player_name)
-#		else:
+		else:
 			# Otherwise set name from peer
 			player.set_player_name(players[p_id])
 
 		world.get_node("players").add_child(player)
 
 	# Set up score
-	world.get_node("score").add_player(get_tree().get_network_unique_id(), player_name)
-	for pn in players:
-		world.get_node("score").add_player(pn, players[pn])
+#	world.get_node("score").add_player(get_tree().get_network_unique_id(), player_name)
+#	for pn in players:
+#		world.get_node("score").add_player(pn, players[pn])
 
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start
@@ -160,15 +166,16 @@ func begin_game():
 
 	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing
 	var spawn_points = {}
-	spawn_points[1] = 0 # Server in spawn point 0
-	var spawn_point_idx = 1
-	for p in players:
-		spawn_points[p] = spawn_point_idx
-		spawn_point_idx += 1
+	spawn_points[1] = 1 # Server in spawn point 0
+	for p_id in players:
+		if players_teams[p_id]==1:
+			spawn_points[p_id] = 1
+		if players_teams[p_id]==2:
+			spawn_points[p_id] = 2
 	# Call to pre-start game with the spawn points
 	for p in players:
 		rpc_id(p, "pre_start_game", spawn_points)
-
+#@@@@@@@
 	pre_start_game(spawn_points)
 
 func end_game():
