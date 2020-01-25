@@ -19,7 +19,7 @@ var harvesting  = false
 #-----Equipment vars-----
 var current_equipID = 0
 
-onready var GUI=preload("res://Source/GUI.tscn")
+#onready var GUI=preload("res://Source/GUI.tscn")
 var healthText
 var healthSlider
 onready var cameraScene=preload("res://Source/Camera2D.tscn")
@@ -191,7 +191,7 @@ sync func _unequip(id):
 remote func _hit(damage):
 	health-= damage
 #	GUI/HBoxContainer/Bars/Bar/Gauge.text
-	print("IM HIT!!!") 
+	print("IM HIT!!!")
 	if health <= 0:
 		health=0
 		rpc('_die')
@@ -203,7 +203,7 @@ remote func _hit(damage):
 func _localHit(damage):
 	health-= damage
 
-	print("IM HIT LOCALLY!!!") 
+	print("IM HIT LOCALLY!!!")
 	if health <= 0:
 		health=0
 		rpc('_die')
