@@ -30,6 +30,8 @@ onready var cameraScene=preload("res://Source/Camera2D.tscn")
 onready var crosshairScene=preload("res://Source/Equipment/Crosshair.tscn")
 var crosshair_instance = null
 
+var inventoryClass = null
+
 #onready var arrowScene=preload("res://Source/Arrow.tscn")
 
 var spearHeldScene = preload("res://Source/Equipment/Spear_Held.tscn")
@@ -52,8 +54,14 @@ var velocity = Vector2()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if is_network_master():
+		name=str(get_tree().get_network_unique_id())
 		var GUI=preload("res://Source/GUI.tscn")
 		var localGUI= GUI.instance()
+		var localInventory= preload("res://Source/Inventory.tscn")
+		inventoryClass=localInventory.instance()
+		
+		get_tree().get_root().add_child(inventoryClass)
+		
 		get_tree().get_root().add_child(localGUI)
 		healthText= get_node("/root/GUI_NODE/GUI/HBoxContainer/Bars/Bar/Count/Background/Number")
 		healthSlider=get_node("/root/GUI_NODE/GUI/HBoxContainer/Bars/Bar/Gauge")
@@ -244,3 +252,8 @@ func _on_rstime_timeout():
 	if is_network_master():
 		healthSlider.value=health
 		healthText.text=str(health)
+
+func walked_in_range_of_dropped_item(itemName):
+	var gridContainerClass = inventoryClass.get_node("Panel/GridContainer")
+	gridContainerClass.pickup_item(itemName)
+

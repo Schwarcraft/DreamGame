@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Source/Ship.gd" type="Script" id=1]
 [ext_resource path="res://Images/Sprites/player1.png" type="Texture" id=2]
-[ext_resource path="res://resource_spawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Source/resource_spawner.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 11.8153
