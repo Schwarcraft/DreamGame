@@ -39,25 +39,25 @@ var player = null
 var holdingItem = null;
 
 func _ready():
-	var playerID= get_tree().get_network_unique_id()
-	player = get_node("/root/Main/players/"+ str(playerID))
-	for item in itemDictionary:
-		var itemName = itemDictionary[item].itemName;
-		var itemIcon = itemDictionary[item].itemIcon;
-		var itemValue = itemDictionary[item].itemValue;
-		itemList.append(ItemClass.new(itemName, itemIcon, null, itemValue));
+		var playerID= get_tree().get_network_unique_id()
+		player = get_node("/root/Main/players/"+ str(playerID))
+		for item in itemDictionary:
+			var itemName = itemDictionary[item].itemName;
+			var itemIcon = itemDictionary[item].itemIcon;
+			var itemValue = itemDictionary[item].itemValue;
+			itemList.append(ItemClass.new(itemName, itemIcon, null, itemValue));
+
+		for i in range(5):
+			var slot = ItemSlotClass.new(i);
+			slotList.append(slot);
+			add_child(slot);
+
+	#	print ("Setting Items in Inventory")
+		slotList[0].setItem(itemList[0]);
+		slotList[1].setItem(itemList[1]);
+		slotList[2].setItem(itemList[2]);
 	
-	for i in range(5):
-		var slot = ItemSlotClass.new(i);
-		slotList.append(slot);
-		add_child(slot);
-	
-#	print ("Setting Items in Inventory")
-	slotList[0].setItem(itemList[0]);
-	slotList[1].setItem(itemList[1]);
-	slotList[2].setItem(itemList[2]);
-	
-	pass
+
 
 func _process(delta):
 	if holdingItem != null && holdingItem.picked:
@@ -67,17 +67,20 @@ func _input(event):
 	if event is InputEventKey:
 		if event.scancode == KEY_Q and holdingItem != null:
 			var drop = DroppedItemScene.instance()
-#			print(get_tree().get_root().print_tree_pretty())
-			get_tree().get_root().add_child(drop);
 			var dPosition= player.position
 			drop.dropped(holdingItem.texture,holdingItem.itemName, dPosition)
-#			print(print_tree_pretty())5
+			rpc('_Network_dropItem',drop,dPosition,holdingItem.texture,holdingItem.itemName)
 			get_parent().remove_child(holdingItem);
 			holdingItem=null
 			
 	pass
 		
 
+sync func _Network_dropItem(droppedItem,droppedItemPosition,droppedItemTexture,droppedItemName):
+#			print(get_tree().get_root().print_tree_pretty())
+			get_tree().get_root().add_child(droppedItem);
+			droppedItem.dropped(droppedItemTexture,droppedItemName, droppedItemPosition)
+#			print(print_tree_pretty())
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:

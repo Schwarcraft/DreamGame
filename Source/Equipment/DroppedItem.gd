@@ -6,8 +6,8 @@ var itemValue = 0
 var canBePickedUp = false #Prevents the item from being instantly picked up (set on timer)
 
 func dropped(inpTexture,inpName, location):
-	rpc('droppedNetwork',inpTexture, inpName, location)
-
+#	rpc('droppedNetwork',inpTexture, inpName, location)
+	pass
 sync func droppedNetwork(inpTexture,inpName, location):
 	$Sprite.texture = inpTexture
 	itemName= inpName

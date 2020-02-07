@@ -101,15 +101,18 @@ remote func pre_start_game(spawn_points):
 		player.spawn=spawn_pos
 		player.team=int(spawn_points[p_id])
 		player.set_name(str(p_id)) # Use unique ID as node name
+		print(player.name)
 		player.position=spawn_pos
 		player.set_network_master(int(p_id)) #set unique id as master
 
-		if int(p_id) == get_tree().get_network_unique_id():
-			# If node for this peer id, set name
-			player.set_player_name(player_name)
-		else:
-			# Otherwise set name from peer
-			player.set_player_name(players[p_id])
+
+### ATM I THINK THIS IS UNNEEDED> AFRAID TO DELETE UNTIL CONFRIMED
+#		if int(p_id) == get_tree().get_network_unique_id():
+#			# If node for this peer id, set name
+#			player.set_player_name(player_name)
+#		else:
+#			# Otherwise set name from peer
+#			player.set_player_name(players[p_id])
 
 		world.get_node("players").add_child(player)
 

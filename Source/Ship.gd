@@ -244,8 +244,10 @@ sync func _throwGrenade(inPosition,inRotation,inTarget):
 	projectile.target=inTarget
 	get_tree().get_root().add_child(projectile)
 	
-func set_player_name(player_name):
-	name=player_name
+	
+#	### ATM I THINK THIS IS UNNEEDED> AFRAID TO DELETE UNTIL CONFRIMED
+#func set_player_name(player_name):
+#	pass
 
 func _on_rstime_timeout():
 	rpc('respawn_N')
